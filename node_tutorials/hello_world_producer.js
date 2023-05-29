@@ -33,13 +33,12 @@ async function startProducer() {
       console.log("[❎] Connection closed")
       process.exit(0)
     }, 500);
-    } catch (error) {
-      console.error(error)
-
-      //Retry after 3 second
-      setTimeout(() => {
-        startProducer()
-      }, 3000)
+  } catch (error) {
+    console.error(error)
+    //Retry after 3 second
+    setTimeout(() => {
+      startProducer()
+    }, 3000)
   }
 }
 
