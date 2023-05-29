@@ -1,6 +1,5 @@
 require "amqp-client"
 require "dotenv/load"
-require "json"
 
 # Grab lavinmq url from .env file
 lavinmq_url = ENV['CLOUDAMQP_URL']
