@@ -20,11 +20,6 @@ queue.subscribe() do |msg|
   counter += 1
   # Add logic to handle the message here...
   puts "[📤] Message received [#{counter}]: #{msg.body}"
-  # Acknowledge the message
-  msg.ack
-rescue => e
-  puts e.full_message
-  msg.reject(requeue: false)
 end
 
 # Close the connection when the script exits
