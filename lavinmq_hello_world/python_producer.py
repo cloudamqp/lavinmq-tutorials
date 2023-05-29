@@ -1,6 +1,6 @@
 # producer.py
 
-import pika, os, json
+import pika, os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,10 +14,7 @@ connection = pika.BlockingConnection(params)
 print("[✅] Connection over channel established")
 
 channel = connection.channel() # start a channel
-channel.queue_declare(queue='image_scaling') # Declare a queue
-channel.basic_publish(exchange='',
-                      routing_key='image_scaling',
-                      body='Information about image scaling')
+channel.queue_declare(queue="hello_world") # Declare a queue
 
 def send_to_queue(channel, routing_key, body):
   channel.basic_publish(
