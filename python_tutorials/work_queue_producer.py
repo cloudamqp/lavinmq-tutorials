@@ -14,34 +14,40 @@ connection = pika.BlockingConnection(params)
 print("[✅] Connection over channel established")
 
 channel = connection.channel() # start a channel
-channel.queue_declare(queue="image_resize_queue") # Declare a queue
+channel.queue_declare(
+  queue="image_resize_queue_1",
+  durable=True
+) # Declare a queue
 
 def send_to_queue(channel, routing_key, body):
   channel.basic_publish(
         exchange='',
         routing_key=routing_key,
-        body=body
+        body=body,
+        properties=pika.BasicProperties(
+            delivery_mode = pika.spec.PERSISTENT_DELIVERY_MODE
+        )
   )
   print(f"[📥] Message sent to queue #{body}")
 
 # Publish messages
 send_to_queue(
-    channel=channel, routing_key="image_resize_queue", body="Resize an image - 1"
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 1"
 )
 send_to_queue(
-    channel=channel, routing_key="image_resize_queue", body="Resize an image - 2"
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 2"
 )
 send_to_queue(
-    channel=channel, routing_key="image_resize_queue", body="Resize an image - 3"
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 3"
 )
 send_to_queue(
-    channel=channel, routing_key="image_resize_queue", body="Resize an image - 4"
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 4"
 )
 send_to_queue(
-    channel=channel, routing_key="image_resize_queue", body="Resize an image - 5"
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 5"
 )
 send_to_queue(
-    channel=channel, routing_key="image_resize_queue", body="Resize an image - 6"
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 6"
 )
 
 try:
