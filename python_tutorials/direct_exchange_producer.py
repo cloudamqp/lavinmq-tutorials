@@ -15,7 +15,7 @@ print("[✅] Connection over channel established")
 
 channel = connection.channel() # start a channel
 
-exchange_name = "slack_notifications"
+exchange_name = "slack_notifications_fanout"
 channel.exchange_declare(
   exchange=exchange_name,
   exchange_type='direct'
