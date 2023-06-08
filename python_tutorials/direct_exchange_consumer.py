@@ -27,7 +27,7 @@ if user_group not in user_groups:
 
 queue_name = user_group + "_queue"
 queue_binding_key = user_group
-exchange_name = "slack_notifications"
+exchange_name = "slack_notifications_fanout"
 
 channel.exchange_declare(
   exchange=exchange_name,
