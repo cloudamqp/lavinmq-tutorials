@@ -1,4 +1,4 @@
-import pika, os, sys, time
+import pika, os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,30 +12,44 @@ connection = pika.BlockingConnection(params)
 print("[✅] Connection over channel established")
 
 channel = connection.channel() # start a channel
-
 channel.queue_declare(
   queue="image_resize_queue_1",
   durable=True
 ) # Declare a queue
 
-def callback(ch, method, properties, body):
-    print(f"[✅] Received #{ body }")
-    time.sleep(5)
-    print("[✅] Image resized!")
-    ch.basic_ack(delivery_tag = method.delivery_tag)
+def send_to_queue(channel, routing_key, body):
+  channel.basic_publish(
+        exchange='',
+        routing_key=routing_key,
+        body=body,
+        properties=pika.BasicProperties(
+            delivery_mode = pika.spec.PERSISTENT_DELIVERY_MODE
+        )
+  )
+  print(f"[📥] Message sent to queue #{body}")
 
-channel.basic_consume(
-    "image_resize_queue_1",
-    callback,
+# Publish messages
+send_to_queue(
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 1"
+)
+send_to_queue(
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 2"
+)
+send_to_queue(
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 3"
+)
+send_to_queue(
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 4"
+)
+send_to_queue(
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 5"
+)
+send_to_queue(
+    channel=channel, routing_key="image_resize_queue_1", body="Resize an image - 6"
 )
 
-
 try:
-  print("\n[❎] Waiting for messages. To exit press CTRL+C \n")
-  channel.start_consuming()
+  connection.close()
+  print("[❎] Connection closed")
 except Exception as e:
   print(f"Error: #{e}")
-  try:
-    sys.exit(0)
-  except SystemExit:
-    os._exit(0)
