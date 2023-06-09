@@ -10,13 +10,14 @@ connection = AMQP::Client.new(lavinmq_url).connect
 # Open a channel
 channel = connection.channel
 puts "[✅] Connection over channel established"
+puts "[❎] Waiting for messages. To exit press CTRL+C "
 
 # Create a queue
-channel.queue_declare("hello_world")
+queue = channel.queue_declare("hello_world")
 
 counter = 0
 # Subscribe to the queue
-queue.subscribe() do |msg|
+channel.basic_consume("hello_world") do |msg|
   counter += 1
   # Add logic to handle the message here...
   puts "[📤] Message received [#{counter}]: #{msg.body}"
