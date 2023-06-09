@@ -10,8 +10,9 @@ async function startConsumer() {
   const channel = await connection.channel()
 
   console.log("[✅] Connection over channel established")
+  console.log("[❎] Waiting for messages. To exit press CTRL+C ")
 
-  const q = await channel.queue('hello world')
+  const q = await channel.queue('hello_world')
 
   let counter = 0;
 
