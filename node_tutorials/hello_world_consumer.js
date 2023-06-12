@@ -12,14 +12,13 @@ async function startConsumer() {
   console.log("[✅] Connection over channel established")
   console.log("[❎] Waiting for messages. To exit press CTRL+C ")
 
-  const q = await channel.queue('hello_world')
+  const q = await channel.queue('hello_world', {durable: false})
 
   let counter = 0;
 
-  await q.subscribe({noAck: false}, async (msg) => {
+  await q.subscribe({noAck: true}, async (msg) => {
     try {
       console.log(`[📤] Message received (${++counter})`, msg.bodyToString())
-      msg.ack()
     } catch (error) {
       console.error(error)
     }

@@ -4,6 +4,7 @@ import {} from 'dotenv/config'
 
 const cloudAMQPURL = process.env.CLOUDAMQP_URL
 
+
 async function startProducer() {
   try {
     //Setup a connection to the RabbitMQ server
@@ -13,12 +14,11 @@ async function startProducer() {
 
     console.log("[✅] Connection over channel established")
 
-    const q = await channel.queue('hello_world')
+    await channel.queue('hello_world', {durable: false})
 
     //Publish a message to the exchange
     async function sendToQueue(routingKey, body) {
-      //amqp-client function expects: exchange, routingKey, message, options
-      await q.publish('', { routingKey }, body)
+      await channel.basicPublish("", routingKey, body)
       console.log("[📥] Message sent to queue", body)
     }
   
