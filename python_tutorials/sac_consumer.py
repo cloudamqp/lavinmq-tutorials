@@ -27,7 +27,8 @@ def callback(ch, method, properties, body):
 channel.basic_consume(
     "sac",
     callback,
-    auto_ack=False
+    auto_ack=False,
+    exclusive=True
 )
 
 try:
