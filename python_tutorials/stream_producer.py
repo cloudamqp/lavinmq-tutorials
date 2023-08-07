@@ -9,7 +9,7 @@ load_dotenv()
 url = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost:5672/%2f')
 
 # Create a connection
-params = pika.URLParameters('amqp://guest:guest@localhost:5672')
+params = pika.URLParameters(url)
 connection = pika.BlockingConnection(params)
 print("[✅] Connection over channel established")
 
