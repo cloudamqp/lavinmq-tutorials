@@ -27,7 +27,7 @@ channel.basic_qos(
 channel.basic_consume(
     "test_stream",
     callback,
-    arguments={"x-stream-offset": "first"}
+    arguments={"x-stream-offset": 1}
 )
 
 try:
