@@ -6,10 +6,11 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-23
 
 DEPENDENCIES
   amqp-client
   dotenv
 
 BUNDLED WITH
-   2.3.11
+   2.4.3
